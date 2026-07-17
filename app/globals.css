@@ -9,7 +9,6 @@
   --color-onyx-line: #2c2c31;
   --color-gold: #d9a441;
   --color-gold-light: #f0c869;
-  --color-gold-dark: #a67a24;
 }
 
 @theme inline {
@@ -20,7 +19,6 @@
   --color-onyx-line: var(--color-onyx-line);
   --color-gold: var(--color-gold);
   --color-gold-light: var(--color-gold-light);
-  --color-gold-dark: var(--color-gold-dark);
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
 }

@@ -21,18 +21,30 @@ function CrownMark() {
   );
 }
 
+const focusRing =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold";
+
 export function BrandHeader({ backHref, backLabel }: BrandHeaderProps) {
   return (
     <header className="border-b border-onyx-line bg-onyx">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
-        <Link href="/" className="group flex flex-col leading-none">
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-onyx"
+      >
+        Pular para o conteúdo
+      </a>
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 sm:px-6">
+        <Link
+          href="/"
+          className={`group flex flex-col leading-none rounded-sm ${focusRing}`}
+        >
           <span className="flex items-center gap-2">
             <CrownMark />
             <span className="font-serif text-lg tracking-[0.25em] text-gold uppercase sm:text-xl">
               Sorelly
             </span>
           </span>
-          <span className="mt-1.5 text-[0.65rem] font-medium tracking-[0.2em] text-foreground/50 uppercase">
+          <span className="mt-1.5 text-[0.7rem] font-medium tracking-[0.2em] text-foreground/70 uppercase">
             Localizador de Revendedoras
           </span>
         </Link>
@@ -40,7 +52,7 @@ export function BrandHeader({ backHref, backLabel }: BrandHeaderProps) {
         {backHref && (
           <Link
             href={backHref}
-            className="text-sm font-medium text-gold-light transition hover:text-gold"
+            className={`rounded-sm text-sm font-medium text-gold-light transition hover:text-gold ${focusRing}`}
           >
             {backLabel ?? "← Nova busca"}
           </Link>

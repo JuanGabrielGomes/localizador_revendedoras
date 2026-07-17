@@ -15,7 +15,7 @@ export function ResultsList({ resultados }: ResultsListProps) {
   }
 
   return (
-    <ul className="flex flex-col gap-3">
+    <ol className="flex flex-col gap-3">
       {resultados.map((revendedora, index) => (
         <ResellerCard
           key={revendedora.id}
@@ -23,6 +23,6 @@ export function ResultsList({ resultados }: ResultsListProps) {
           posicao={index + 1}
         />
       ))}
-    </ul>
+    </ol>
   );
 }

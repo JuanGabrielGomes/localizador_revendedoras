@@ -9,9 +9,12 @@ interface SearchFormProps {
 }
 
 const inputClass =
-  "rounded-md border border-onyx-line bg-onyx-soft px-3 py-2 text-sm text-foreground placeholder:text-foreground/35 outline-none transition focus:border-gold focus:ring-1 focus:ring-gold";
+  "rounded-md border border-onyx-line bg-onyx-soft px-3 py-2 text-sm text-foreground placeholder:text-foreground/45 outline-none transition focus:border-gold focus:ring-1 focus:ring-gold";
 
 const labelClass = "text-sm font-medium text-foreground/80";
+
+const focusRing =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold";
 
 export function SearchForm({ onSubmit, initialValues }: SearchFormProps) {
   const [cep, setCep] = useState(initialValues?.cep ?? "");
@@ -130,7 +133,7 @@ export function SearchForm({ onSubmit, initialValues }: SearchFormProps) {
         </p>
       )}
 
-      <p className="text-xs text-foreground/50">
+      <p className="text-xs text-foreground/60">
         Preencha o CEP, ou rua e/ou bairro (quanto mais campos, mais precisa a
         busca).
       </p>
@@ -141,7 +144,7 @@ export function SearchForm({ onSubmit, initialValues }: SearchFormProps) {
             key={exemplo.label}
             type="button"
             onClick={() => handleExemploClick(exemplo.input)}
-            className="rounded-full border border-onyx-line bg-onyx px-3 py-1 text-xs text-foreground/60 transition hover:border-gold hover:text-gold-light"
+            className={`rounded-full border border-onyx-line bg-onyx px-3 py-1.5 text-xs text-foreground/70 transition hover:border-gold hover:text-gold-light ${focusRing}`}
           >
             {exemplo.label}
           </button>
@@ -150,7 +153,7 @@ export function SearchForm({ onSubmit, initialValues }: SearchFormProps) {
 
       <button
         type="submit"
-        className="mx-auto flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-onyx transition hover:bg-gold-light sm:max-w-sm"
+        className={`mx-auto flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-onyx transition hover:bg-gold-light sm:max-w-sm ${focusRing}`}
       >
         Buscar revendedoras
         <span aria-hidden="true">→</span>

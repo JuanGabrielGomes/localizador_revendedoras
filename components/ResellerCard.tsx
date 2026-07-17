@@ -13,7 +13,10 @@ export function ResellerCard({ revendedora, posicao }: ResellerCardProps) {
   return (
     <li className="flex items-start justify-between gap-3 rounded-xl border border-onyx-line bg-onyx-soft p-4 shadow-[0_0_0_1px_rgba(217,164,65,0.06)] transition hover:border-gold/40">
       <div className="flex gap-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold text-sm font-semibold text-onyx">
+        <span
+          aria-hidden="true"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold text-sm font-semibold text-onyx"
+        >
           {posicao}
         </span>
         <div>
@@ -24,7 +27,7 @@ export function ResellerCard({ revendedora, posicao }: ResellerCardProps) {
             {revendedora.rua}, {revendedora.numero} - {revendedora.bairro},{" "}
             {revendedora.cidade}/{revendedora.estado}
           </p>
-          <p className="text-sm text-foreground/40">CEP {revendedora.cep}</p>
+          <p className="text-sm text-foreground/60">CEP {revendedora.cep}</p>
         </div>
       </div>
       <div className="flex shrink-0 flex-col items-end gap-2">
@@ -35,7 +38,8 @@ export function ResellerCard({ revendedora, posicao }: ResellerCardProps) {
           href={buildRouteUrl(revendedora.lat, revendedora.lng)}
           target="_blank"
           rel="noopener noreferrer"
-          className="whitespace-nowrap rounded-full border border-gold/50 px-3 py-1.5 text-xs font-medium text-gold-light transition hover:border-gold hover:bg-gold/10"
+          aria-label={`Ver rota até ${revendedora.nome} no Google Maps (abre em nova aba)`}
+          className="whitespace-nowrap rounded-full border border-gold/50 px-3 py-1.5 text-xs font-medium text-gold-light transition hover:border-gold hover:bg-gold/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           Ver rota
         </a>

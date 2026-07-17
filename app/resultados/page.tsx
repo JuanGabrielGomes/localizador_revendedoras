@@ -13,7 +13,7 @@ const MapView = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full w-full items-center justify-center text-sm text-foreground/40">
+      <div className="flex h-full w-full items-center justify-center text-sm text-foreground/70">
         Carregando mapa...
       </div>
     ),
@@ -87,7 +87,14 @@ function ResultadosContent() {
     <div className="flex flex-1 flex-col">
       <BrandHeader backHref="/" />
 
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-4 py-8 sm:px-6">
+      <main
+        id="conteudo"
+        className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-4 py-8 sm:px-6"
+      >
+        <h1 className="font-serif text-2xl text-foreground sm:text-3xl">
+          Resultados da busca
+        </h1>
+
         {!hasQuery && (
           <div className="flex flex-col items-center gap-3 rounded-2xl border border-onyx-line bg-onyx-soft/60 p-10 text-center">
             <p className="text-foreground/70">
@@ -95,7 +102,7 @@ function ResultadosContent() {
             </p>
             <Link
               href="/"
-              className="rounded-md bg-gold px-5 py-2 text-sm font-semibold text-onyx transition hover:bg-gold-light"
+              className="rounded-md bg-gold px-5 py-2 text-sm font-semibold text-onyx transition hover:bg-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light"
             >
               Voltar para a busca
             </Link>
@@ -103,8 +110,15 @@ function ResultadosContent() {
         )}
 
         {isLoading && (
-          <div className="flex items-center gap-3 text-sm text-foreground/60">
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-onyx-line border-t-gold" />
+          <div
+            role="status"
+            aria-live="polite"
+            className="flex items-center gap-3 text-sm text-foreground/60"
+          >
+            <span
+              aria-hidden="true"
+              className="h-4 w-4 animate-spin rounded-full border-2 border-onyx-line border-t-gold"
+            />
             Buscando revendedoras mais próximas...
           </div>
         )}
@@ -130,7 +144,11 @@ function ResultadosContent() {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <ResultsList resultados={result.resultados} />
 
-              <div className="h-[400px] overflow-hidden rounded-2xl border border-gold/40 shadow-[0_0_0_1px_rgba(201,162,39,0.15)] lg:h-auto lg:min-h-[500px]">
+              <div
+                role="region"
+                aria-label="Mapa com a localização das revendedoras encontradas"
+                className="h-[400px] overflow-hidden rounded-2xl border border-gold/40 shadow-[0_0_0_1px_rgba(201,162,39,0.15)] lg:h-auto lg:min-h-[500px]"
+              >
                 <MapView
                   userLocation={result.enderecoResolvido}
                   revendedoras={result.resultados}
