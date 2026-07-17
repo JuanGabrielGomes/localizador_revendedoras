@@ -6,22 +6,31 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { RevendedoraComDistancia } from "@/lib/types";
 
-const revendedoraIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+const revendedoraIcon = new L.DivIcon({
+  className: "",
+  html: `
+    <svg width="28" height="40" viewBox="0 0 28 40" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 26 14 26s14-15.5 14-26C28 6.268 21.732 0 14 0z" fill="#c9a227" stroke="#0b0b0d" stroke-width="1.5"/>
+      <circle cx="14" cy="14" r="5" fill="#0b0b0d"/>
+    </svg>
+  `,
+  iconSize: [28, 40],
+  iconAnchor: [14, 40],
+  popupAnchor: [0, -36],
 });
 
 const userIcon = new L.DivIcon({
   className: "",
-  html: '<div style="background:#2563eb;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 0 6px rgba(0,0,0,0.4);"></div>',
-  iconSize: [16, 16],
-  iconAnchor: [8, 8],
+  html: `
+    <div style="
+      width:18px;height:18px;border-radius:9999px;
+      background:#0b0b0d;
+      border:3px solid #c9a227;
+      box-shadow:0 0 0 2px rgba(0,0,0,0.25);
+    "></div>
+  `,
+  iconSize: [18, 18],
+  iconAnchor: [9, 9],
 });
 
 interface MapViewProps {

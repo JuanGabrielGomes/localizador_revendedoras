@@ -8,7 +8,7 @@ interface ResultsListProps {
 export function ResultsList({ resultados }: ResultsListProps) {
   if (resultados.length === 0) {
     return (
-      <p className="rounded-lg border border-dashed border-slate-300 p-6 text-center text-slate-500">
+      <p className="rounded-xl border border-dashed border-gold/30 bg-onyx-soft/40 p-6 text-center text-foreground/60">
         Nenhuma revendedora ativa encontrada perto desse endereço.
       </p>
     );
