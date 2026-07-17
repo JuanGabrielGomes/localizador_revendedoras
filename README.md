@@ -165,7 +165,7 @@ npm run geocode-seed    # gera data/revendedoras.json (leva ~4-5 min, respeita r
 
 ## Deploy
 
-Aplicação publicada na Vercel: **[URL a preencher após o deploy]**
+Aplicação publicada na Vercel: **https://localizador-revendedoras.vercel.app/**
 
 Deploy automático a partir do repositório Git — sem variáveis de ambiente
 necessárias.
