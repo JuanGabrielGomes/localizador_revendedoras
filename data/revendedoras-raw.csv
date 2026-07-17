@@ -1,0 +1,201 @@
+id;nome_revendedora;rua;numero;bairro;cidade;estado;cep;status
+1;Patrícia Moreira;Rua Konrad Adenauer;5777;Tarumã;Curitiba;PR;82821-245;Ativa
+2;Ana Alves;Rua Padre Anchieta;2392;Bigorrilho;Curitiba;PR;80730-203;Ativa
+3;Simone Moreira;Avenida Brasil;470;Centro;Foz do Iguaçu;PR;85851-918;Ativa
+4;Cláudia Souza;Avenida Brasil;5909;Centro;Cascavel;PR;85801-356;Ativa
+5;Camila Alves;Rua Saldanha Marinho;3955;Centro;Guarapuava;PR;85010-367;Ativa
+6;Larissa Alves;Rua Brigadeiro Franco;3459;Centro;Curitiba;PR;80250-801;Ativa
+7;Cristiane Carvalho;Avenida República Argentina;5284;�gua Verde;Curitiba;PR;80620-285;Ativa
+8;Simone Mendes;Rua Engenheiro Ostoja Roguski;3266;Jardim Botânico;Curitiba;PR;80210-496;Ativa
+9;Kelly Teixeira;Rua Pernambuco;1960;Centro;Londrina;PR;86020-964;Inativa
+10;Luciana Ferreira;Rua XV de Novembro;1742;Centro;Guarapuava;PR;85010-779;Ativa
+11;Ana Oliveira;Avenida Ayrton Senna da Silva;711;Gleba Palhano;Londrina;PR;86050-851;Ativa
+12;Beatriz Rocha;Rua Professor Pedro Viriato Parigot de Souza;4071;Mossunguê;Curitiba;PR;81200-629;Ativa
+13;Simone Souza;Avenida Cândido de Abreu;2719;Centro Cívico;Curitiba;PR;80530-718;Ativa
+14;Simone Moraes;Rua Professor Pedro Viriato Parigot de Souza;2006;Mossunguê;Curitiba;PR;81200-009;Ativa
+15;Juliana Oliveira;Avenida República Argentina;3821;�gua Verde;Curitiba;PR;80620-275;Ativa
+16;Natália Ribeiro;Avenida Brasil;2096;Centro;Foz do Iguaçu;PR;85851-703;Ativa
+17;Tainá Barbosa;Rua XV de Novembro;1026;Centro;Guarapuava;PR;85010-951;Ativa
+18;Débora Ferreira;Avenida Sete de Setembro;499;Rebouças;Curitiba;PR;80230-172;Ativa
+19;Beatriz Barbosa;Avenida República Argentina;987;�gua Verde;Curitiba;PR;80620-073;Ativa
+20;Juliana Gomes;Avenida Cândido de Abreu;2981;Centro Cívico;Curitiba;PR;80530-754;Ativa
+21;Adriana Lopes;Avenida Presidente Kennedy;2058;Portão;Curitiba;PR;80610-220;Ativa
+22;Beatriz Teixeira;Avenida Cândido de Abreu;5478;Centro Cívico;Curitiba;PR;80530-618;Ativa
+23;Ana Vieira;Avenida Tiradentes;3808;Zona 01;Maringá;PR;87013-414;Ativa
+24;Elisângela Ferreira;Avenida Tiradentes;2735;Zona 01;Maringá;PR;87013-684;Ativa
+25;Renata Vieira;Rua Itupava;2447;Alto da XV;Curitiba;PR;80040-835;Ativa
+26;Paula Souza;Rua Imaculada Conceição;4949;Prado Velho;Curitiba;PR;80215-880;Ativa
+27;Tatiane Ribeiro;Rua Brigadeiro Franco;4256;Centro;Curitiba;PR;80250-014;Ativa
+28;Ana Gomes;Rua Balduíno Taques;348;Centro;Ponta Grossa;PR;84010-375;Inativa
+29;Luciana Monteiro;Avenida Brasil;3430;Zona 01;Maringá;PR;87013-555;Em prospecção
+30;Isabela Mendes;Avenida Brasil;5497;Zona 01;Maringá;PR;87013-929;Ativa
+31;Camila Correia;Rua Padre Anchieta;1976;Bigorrilho;Curitiba;PR;80730-557;Em prospecção
+32;Mariana Vieira;Avenida São Paulo;2570;Zona 01;Maringá;PR;87013-220;Ativa
+33;Larissa Correia;Rua Brigadeiro Franco;2166;Centro;Curitiba;PR;80250-066;Em prospecção
+34;Bruna Cardoso;Rua Itupava;2953;Alto da XV;Curitiba;PR;80040-466;Ativa
+35;Letícia Castro;Rua Itupava;858;Alto da XV;Curitiba;PR;80040-775;Inativa
+36;Patrícia Rodrigues;Avenida Tiradentes;1086;Zona 01;Maringá;PR;87013-967;Ativa
+37;Daniela Lopes;Rua Barão do Rio Branco;1632;Centro;Cascavel;PR;85801-694;Ativa
+38;Renata Costa;Rua Saldanha Marinho;4074;Centro;Guarapuava;PR;85010-565;Inativa
+39;Bruna Freitas;Avenida das Torres;5397;São José dos Pinhais;São José dos Pinhais;PR;83005-850;Ativa
+40;Raquel Ribeiro;Rua Saldanha Marinho;103;Centro;Guarapuava;PR;85010-903;Ativa
+41;Jéssica Correia;Rua XV de Novembro;333;Centro;São José dos Pinhais;PR;83005-096;Ativa
+42;Ana Silva;Rua Konrad Adenauer;4417;Tarumã;Curitiba;PR;82821-340;Ativa
+43;Jéssica Carvalho;Rua Itupava;4128;Alto da XV;Curitiba;PR;80040-913;Em prospecção
+44;Tatiane Cardoso;Rua XV de Novembro;1388;Centro;São José dos Pinhais;PR;83005-115;Ativa
+45;Raquel Vieira;Avenida Brasil;1398;Centro;Foz do Iguaçu;PR;85851-351;Ativa
+46;Amanda Rodrigues;Rua XV de Novembro;1242;Centro;São José dos Pinhais;PR;83005-990;Ativa
+47;Rosana Silva;Rua Brigadeiro Franco;1660;Centro;Curitiba;PR;80250-055;Ativa
+48;Beatriz Vieira;Avenida Manoel Ribas;943;Mercês;Curitiba;PR;80810-221;Ativa
+49;Priscila Vieira;Avenida Rui Barbosa;4975;Afonso Pena;São José dos Pinhais;PR;83045-118;Ativa
+50;Débora Souza;Rua Paraná;4008;Centro;Cascavel;PR;85801-206;Ativa
+51;Jéssica Freitas;Rua XV de Novembro;2226;Centro;São José dos Pinhais;PR;83005-072;Ativa
+52;Aline Castro;Avenida Higienópolis;5100;Centro;Londrina;PR;86020-116;Ativa
+53;Camila Moraes;Avenida Brasil;966;Zona 01;Maringá;PR;87013-083;Ativa
+54;Raquel Pereira;Rua Barão do Rio Branco;3048;Centro;Cascavel;PR;85801-238;Ativa
+55;Maria Alves;Rua Brigadeiro Franco;2732;Centro;Curitiba;PR;80250-677;Ativa
+56;Bianca Castro;Avenida Manoel Ribas;2121;Mercês;Curitiba;PR;80810-378;Ativa
+57;Larissa Moreira;Avenida Cândido de Abreu;381;Centro Cívico;Curitiba;PR;80530-815;Ativa
+58;Gabriela Gomes;Rua Marechal Hermes;3463;Centro Cívico;Curitiba;PR;80530-526;Ativa
+59;Tainá Vieira;Avenida Manoel Ribas;646;Mercês;Curitiba;PR;80810-022;Ativa
+60;Elisângela Lopes;Rua Barão do Rio Branco;2348;Centro;Cascavel;PR;85801-826;Ativa
+61;Paula Carvalho;Avenida Vicente Machado;1052;Centro;Ponta Grossa;PR;84010-425;Inativa
+62;Priscila Carvalho;Avenida Tiradentes;4563;Zona 01;Maringá;PR;87013-347;Ativa
+63;Elisângela Oliveira;Rua Balduíno Taques;1273;Centro;Ponta Grossa;PR;84010-655;Ativa
+64;Bianca Pereira;Avenida Manoel Ribas;5161;Centro;Guarapuava;PR;85010-875;Ativa
+65;Elaine Carvalho;Avenida Rui Barbosa;3921;Afonso Pena;São José dos Pinhais;PR;83045-027;Ativa
+66;Cláudia Mendes;Rua XV de Novembro;1426;Centro;Guarapuava;PR;85010-075;Ativa
+67;Vanessa Barbosa;Rua XV de Novembro;5799;Centro;Guarapuava;PR;85010-715;Em prospecção
+68;Amanda Ribeiro;Rua Marechal Hermes;4896;Centro Cívico;Curitiba;PR;80530-131;Ativa
+69;Isabela Nascimento;Rua Izabel A Redentora;4207;Centro;São José dos Pinhais;PR;83005-053;Ativa
+70;Patrícia Freitas;Rua Saldanha Marinho;2686;Centro;Guarapuava;PR;85010-175;Ativa
+71;Adriana Almeida;Rua Izabel A Redentora;3625;Centro;São José dos Pinhais;PR;83005-681;Ativa
+72;Bruna Oliveira;Avenida Higienópolis;1094;Centro;Londrina;PR;86020-046;Ativa
+73;Mariana Almeida;Avenida Cândido de Abreu;5377;Centro Cívico;Curitiba;PR;80530-664;Ativa
+74;Sabrina Teixeira;Avenida Paraná;943;Centro;Foz do Iguaçu;PR;85852-953;Inativa
+75;Tainá Ribeiro;Avenida Tiradentes;3590;Zona 01;Maringá;PR;87013-143;Ativa
+76;Simone Nascimento;Avenida Brasil;5149;Centro;Cascavel;PR;85801-263;Ativa
+77;Luciana Fernandes;Rua Paraná;3927;Centro;Cascavel;PR;85801-308;Ativa
+78;Vitória Almeida;Avenida Manoel Ribas;1207;Mercês;Curitiba;PR;80810-976;Em prospecção
+79;Isabela Lima;Rua Imaculada Conceição;5327;Prado Velho;Curitiba;PR;80215-956;Ativa
+80;Fernanda Souza;Rua Padre Anchieta;2402;Bigorrilho;Curitiba;PR;80730-843;Inativa
+81;Patrícia Mendes;Avenida Brasil;1532;Zona 01;Maringá;PR;87013-815;Ativa
+82;Bruna Rodrigues;Rua Saldanha Marinho;5824;Centro;Guarapuava;PR;85010-548;Ativa
+83;Cláudia Rodrigues;Rua Konrad Adenauer;3144;Tarumã;Curitiba;PR;82821-563;Em prospecção
+84;Débora Nascimento;Avenida Brasil;374;Centro;Foz do Iguaçu;PR;85851-246;Ativa
+85;Cristiane Ribeiro;Avenida Higienópolis;907;Centro;Londrina;PR;86020-213;Ativa
+86;Tatiane Pereira;Rua Engenheiro Ostoja Roguski;2800;Jardim Botânico;Curitiba;PR;80210-845;Ativa
+87;Raquel Moraes;Rua Engenheiro Ostoja Roguski;3928;Jardim Botânico;Curitiba;PR;80210-919;Ativa
+88;Daniela Silva;Avenida Paraná;4186;Centro;Foz do Iguaçu;PR;85852-801;Ativa
+89;Larissa Monteiro;Avenida Sete de Setembro;2377;Rebouças;Curitiba;PR;80230-842;Ativa
+90;Bianca Cardoso;Avenida das Torres;2028;São José dos Pinhais;São José dos Pinhais;PR;83005-094;Ativa
+91;Paula Rocha;Avenida Presidente Kennedy;5356;Portão;Curitiba;PR;80610-214;Em prospecção
+92;Elisângela Rocha;Rua Saldanha Marinho;4155;Centro;Guarapuava;PR;85010-152;Ativa
+93;Daniela Nascimento;Rua Izabel A Redentora;4166;Centro;São José dos Pinhais;PR;83005-484;Ativa
+94;Luciana Martins;Rua XV de Novembro;1904;Centro;São José dos Pinhais;PR;83005-432;Ativa
+95;Simone Vieira;Rua Mateus Leme;2496;São Francisco;Curitiba;PR;80510-715;Ativa
+96;Elaine Vieira;Rua XV de Novembro;1815;Centro;São José dos Pinhais;PR;83005-809;Inativa
+97;Vanessa Martins;Avenida Ayrton Senna da Silva;2387;Gleba Palhano;Londrina;PR;86050-965;Ativa
+98;Aline Teixeira;Avenida Sete de Setembro;1079;Rebouças;Curitiba;PR;80230-468;Ativa
+99;Tainá Fernandes;Rua Brigadeiro Franco;3387;Centro;Curitiba;PR;80250-801;Ativa
+100;Cristiane Martins;Avenida Sete de Setembro;1605;Rebouças;Curitiba;PR;80230-625;Em prospecção
+101;Renata Teixeira;Rua Professor Pedro Viriato Parigot de Souza;5072;Mossunguê;Curitiba;PR;81200-638;Ativa
+102;Cláudia Barbosa;Avenida Rui Barbosa;2702;Afonso Pena;São José dos Pinhais;PR;83045-800;Ativa
+103;Tatiane Costa;Rua Professor Pedro Viriato Parigot de Souza;4593;Mossunguê;Curitiba;PR;81200-206;Ativa
+104;Kelly Correia;Rua Ermelino de Leão;2050;Olarias;Ponta Grossa;PR;84035-166;Ativa
+105;Ana Lopes;Rua Saldanha Marinho;3497;Centro;Guarapuava;PR;85010-875;Ativa
+106;Patrícia Lima;Rua XV de Novembro;1048;Centro;São José dos Pinhais;PR;83005-483;Ativa
+107;Cláudia Pereira;Rua Engenheiro Ostoja Roguski;5222;Jardim Botânico;Curitiba;PR;80210-278;Ativa
+108;Michele Martins;Rua Pernambuco;5649;Centro;Londrina;PR;86020-690;Ativa
+109;Juliana Rodrigues;Rua Barão do Rio Branco;3991;Centro;Cascavel;PR;85801-738;Em prospecção
+110;Bianca Moreira;Rua XV de Novembro;5309;Centro;Guarapuava;PR;85010-062;Em prospecção
+111;Maria Teixeira;Rua Pernambuco;878;Centro;Londrina;PR;86020-565;Ativa
+112;Elaine Oliveira;Rua Balduíno Taques;3674;Centro;Ponta Grossa;PR;84010-413;Ativa
+113;Gabriela Freitas;Rua Imaculada Conceição;3640;Prado Velho;Curitiba;PR;80215-717;Ativa
+114;Carolina Rodrigues;Rua Engenheiro Ostoja Roguski;1943;Jardim Botânico;Curitiba;PR;80210-855;Ativa
+115;Amanda Souza;Avenida Brasil;3215;Zona 01;Maringá;PR;87013-817;Ativa
+116;Camila Cardoso;Avenida do Batel;4980;Batel;Curitiba;PR;80420-542;Ativa
+117;Luciana Pereira;Avenida Brasil;5898;Centro;Foz do Iguaçu;PR;85851-489;Inativa
+118;Maria Gomes;Rua Padre Anchieta;1160;Bigorrilho;Curitiba;PR;80730-859;Ativa
+119;Bruna Ferreira;Rua Mateus Leme;358;São Francisco;Curitiba;PR;80510-636;Ativa
+120;Michele Vieira;Avenida do Batel;1848;Batel;Curitiba;PR;80420-085;Ativa
+121;Isabela Vieira;Avenida Sete de Setembro;3382;Rebouças;Curitiba;PR;80230-828;Ativa
+122;Vitória Freitas;Avenida Vicente Machado;1655;Centro;Ponta Grossa;PR;84010-478;Ativa
+123;Luciana Cardoso;Rua Brigadeiro Franco;3385;Centro;Curitiba;PR;80250-896;Ativa
+124;Isabela Teixeira;Avenida Higienópolis;5127;Centro;Londrina;PR;86020-999;Ativa
+125;Michele Santos;Avenida Brasil;1324;Centro;Cascavel;PR;85801-344;Ativa
+126;Natália Oliveira;Rua Izabel A Redentora;3511;Centro;São José dos Pinhais;PR;83005-455;Ativa
+127;Sabrina Pereira;Avenida Tiradentes;168;Zona 01;Maringá;PR;87013-995;Ativa
+128;Amanda Moreira;Rua Padre Anchieta;4684;Bigorrilho;Curitiba;PR;80730-659;Ativa
+129;Aline Costa;Rua Brigadeiro Franco;2170;Centro;Curitiba;PR;80250-269;Ativa
+130;Tatiane Souza;Rua Professor Pedro Viriato Parigot de Souza;1982;Mossunguê;Curitiba;PR;81200-719;Ativa
+131;Patrícia Lopes;Avenida Vicente Machado;4715;Centro;Ponta Grossa;PR;84010-727;Ativa
+132;Carolina Moraes;Rua XV de Novembro;1449;Centro;São José dos Pinhais;PR;83005-396;Ativa
+133;Vanessa Fernandes;Avenida Brasil;2442;Centro;Foz do Iguaçu;PR;85851-994;Ativa
+134;Adriana Monteiro;Rua Konrad Adenauer;3381;Tarumã;Curitiba;PR;82821-188;Ativa
+135;Mariana Castro;Avenida do Batel;4224;Batel;Curitiba;PR;80420-828;Ativa
+136;Natália Teixeira;Avenida Sete de Setembro;4174;Rebouças;Curitiba;PR;80230-280;Ativa
+137;Paula Alves;Rua Marechal Hermes;1462;Centro Cívico;Curitiba;PR;80530-393;Ativa
+138;Cláudia Castro;Avenida das Cataratas;4212;Vila Yolanda;Foz do Iguaçu;PR;85853-317;Ativa
+139;Cristiane Freitas;Rua Mateus Leme;944;São Francisco;Curitiba;PR;80510-371;Em prospecção
+140;Gabriela Barbosa;Avenida Paraná;2960;Centro;Foz do Iguaçu;PR;85852-821;Ativa
+141;Cláudia Carvalho;Avenida Higienópolis;425;Centro;Londrina;PR;86020-806;Em prospecção
+142;Simone Alves;Avenida Brasil;442;Centro;Foz do Iguaçu;PR;85851-599;Em prospecção
+143;Kelly Castro;Rua Marechal Hermes;2921;Centro Cívico;Curitiba;PR;80530-951;Ativa
+144;Aline Barbosa;Avenida São Paulo;4271;Zona 01;Maringá;PR;87013-435;Em prospecção
+145;Larissa Rodrigues;Avenida Brasil;73;Zona 01;Maringá;PR;87013-700;Ativa
+146;Renata Correia;Rua Marechal Hermes;5477;Centro Cívico;Curitiba;PR;80530-651;Ativa
+147;Isabela Correia;Rua Izabel A Redentora;1149;Centro;São José dos Pinhais;PR;83005-065;Em prospecção
+148;Luciana Souza;Avenida das Torres;2222;São José dos Pinhais;São José dos Pinhais;PR;83005-628;Ativa
+149;Sabrina Silva;Rua Marechal Hermes;1714;Centro Cívico;Curitiba;PR;80530-493;Ativa
+150;Ana Rodrigues;Rua Barão do Rio Branco;1902;Centro;Cascavel;PR;85801-097;Ativa
+151;Ana Fernandes;Avenida Brasil;4774;Centro;Cascavel;PR;85801-360;Em prospecção
+152;Adriana Vieira;Rua Ermelino de Leão;5100;Olarias;Ponta Grossa;PR;84035-493;Ativa
+153;Beatriz Fernandes;Avenida Manoel Ribas;3943;Mercês;Curitiba;PR;80810-325;Ativa
+154;Kelly Lopes;Rua Mateus Leme;4409;São Francisco;Curitiba;PR;80510-247;Ativa
+155;Vitória Pereira;Avenida das Torres;5566;São José dos Pinhais;São José dos Pinhais;PR;83005-223;Inativa
+156;Simone Silva;Rua Izabel A Redentora;5914;Centro;São José dos Pinhais;PR;83005-096;Ativa
+157;Aline Souza;Rua Itupava;2423;Alto da XV;Curitiba;PR;80040-386;Ativa
+158;Carolina Monteiro;Rua XV de Novembro;1006;Centro;Curitiba;PR;80020-131;Ativa
+159;Natália Freitas;Rua XV de Novembro;2369;Centro;São José dos Pinhais;PR;83005-938;Ativa
+160;Bruna Lima;Rua Imaculada Conceição;1512;Prado Velho;Curitiba;PR;80215-323;Ativa
+161;Larissa Fernandes;Avenida Higienópolis;4216;Centro;Londrina;PR;86020-313;Ativa
+162;Luciana Correia;Avenida Vicente Machado;3976;Centro;Ponta Grossa;PR;84010-338;Ativa
+163;Isabela Cardoso;Rua Padre Anchieta;3095;Bigorrilho;Curitiba;PR;80730-400;Ativa
+164;Letícia Moreira;Rua Padre Anchieta;480;Bigorrilho;Curitiba;PR;80730-843;Ativa
+165;Priscila Barbosa;Avenida Ayrton Senna da Silva;1871;Gleba Palhano;Londrina;PR;86050-212;Ativa
+166;Mariana Monteiro;Rua XV de Novembro;956;Centro;Guarapuava;PR;85010-851;Em prospecção
+167;Camila Santos;Avenida Vicente Machado;3196;Centro;Ponta Grossa;PR;84010-205;Ativa
+168;Rosana Ferreira;Rua Engenheiro Ostoja Roguski;1578;Jardim Botânico;Curitiba;PR;80210-339;Ativa
+169;Fernanda Ribeiro;Avenida das Torres;3675;São José dos Pinhais;São José dos Pinhais;PR;83005-020;Ativa
+170;Letícia Oliveira;Avenida Vicente Machado;2327;Centro;Ponta Grossa;PR;84010-335;Ativa
+171;Luciana Nascimento;Rua Padre Anchieta;1794;Bigorrilho;Curitiba;PR;80730-891;Ativa
+172;Cláudia Santos;Avenida Sete de Setembro;2404;Rebouças;Curitiba;PR;80230-113;Ativa
+173;Daniela Ferreira;Rua Konrad Adenauer;967;Tarumã;Curitiba;PR;82821-169;Ativa
+174;Tatiane Rodrigues;Avenida Presidente Kennedy;3368;Portão;Curitiba;PR;80610-515;Ativa
+175;Patrícia Cardoso;Avenida do Batel;701;Batel;Curitiba;PR;80420-797;Ativa
+176;Vitória Nascimento;Rua XV de Novembro;4074;Centro;Guarapuava;PR;85010-284;Ativa
+177;Amanda Moraes;Rua Pernambuco;2669;Centro;Londrina;PR;86020-359;Ativa
+178;Fernanda Nascimento;Rua Itupava;4629;Alto da XV;Curitiba;PR;80040-274;Ativa
+179;Tatiane Oliveira;Avenida Ayrton Senna da Silva;950;Gleba Palhano;Londrina;PR;86050-381;Em prospecção
+180;Beatriz Carvalho;Rua Barão do Rio Branco;3026;Centro;Cascavel;PR;85801-385;Ativa
+181;Amanda Mendes;Avenida Presidente Kennedy;5496;Portão;Curitiba;PR;80610-272;Em prospecção
+182;Amanda Vieira;Avenida Tiradentes;1789;Zona 01;Maringá;PR;87013-130;Ativa
+183;Letícia Ribeiro;Avenida Manoel Ribas;1793;Centro;Guarapuava;PR;85010-886;Ativa
+184;Vanessa Ribeiro;Rua XV de Novembro;2722;Centro;Guarapuava;PR;85010-046;Ativa
+185;Vitória Barbosa;Rua Saldanha Marinho;3740;Centro;Guarapuava;PR;85010-656;Ativa
+186;Gabriela Correia;Avenida Higienópolis;2144;Centro;Londrina;PR;86020-494;Ativa
+187;Letícia Martins;Avenida Rui Barbosa;4409;Afonso Pena;São José dos Pinhais;PR;83045-577;Ativa
+188;Kelly Gomes;Rua Barão do Rio Branco;2163;Centro;Cascavel;PR;85801-612;Ativa
+189;Sabrina Cardoso;Rua Marechal Hermes;983;Centro Cívico;Curitiba;PR;80530-470;Ativa
+190;Jéssica Barbosa;Avenida Brasil;917;Zona 01;Maringá;PR;87013-701;Ativa
+191;Isabela Rocha;Rua XV de Novembro;5859;Centro;Guarapuava;PR;85010-507;Ativa
+192;Isabela Martins;Rua Izabel A Redentora;3775;Centro;São José dos Pinhais;PR;83005-625;Ativa
+193;Kelly Costa;Rua XV de Novembro;2434;Centro;São José dos Pinhais;PR;83005-984;Ativa
+194;Letícia Vieira;Rua Paraná;3786;Centro;Cascavel;PR;85801-627;Ativa
+195;Kelly Martins;Avenida Cândido de Abreu;5676;Centro Cívico;Curitiba;PR;80530-511;Ativa
+196;Cristiane Moraes;Rua XV de Novembro;2411;Centro;Curitiba;PR;80020-331;Ativa
+197;Cristiane Vieira;Rua Saldanha Marinho;4214;Centro;Guarapuava;PR;85010-372;Ativa
+198;Maria Ferreira;Avenida Vicente Machado;3454;Centro;Ponta Grossa;PR;84010-236;Ativa
+199;Sabrina Monteiro;Rua XV de Novembro;5840;Centro;São José dos Pinhais;PR;83005-829;Ativa
+200;Elisângela Correia;Rua Imaculada Conceição;2080;Prado Velho;Curitiba;PR;80215-188;Ativa
