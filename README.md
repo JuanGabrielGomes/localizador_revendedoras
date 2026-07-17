@@ -19,7 +19,7 @@ e dourado) inspirada na Sorelly Joias.
 - [Tratamento de dados e erros](#tratamento-de-dados-e-erros)
 - [Testes](#testes)
 - [Deploy](#deploy)
-- [Próximos passos](#próximos-passos)
+- [Acessibilidade, responsividade e segurança](#acessibilidade-responsividade-e-segurança)
 - [Uso de Inteligência Artificial](#uso-de-inteligência-artificial)
 
 ## Como rodar localmente
@@ -90,16 +90,24 @@ própria dentro do mesmo espírito visual (joalheria de luxo), não uma cópia
 pixel a pixel:
 
 - `#0b0b0d` (onyx) — fundo principal
-- `#c9a227` (dourado) — acentos, botões, bordas
-- `#faf6ee` (creme) — fundo dos cards de resultado e do mapa
+- `#17171b` (onyx suave) — cards e inputs sobre o fundo escuro
+- `#d9a441` (dourado) — acentos, botões, bordas, ícone de coroa no logo
 
 Tipografia: [Playfair Display](https://fonts.google.com/specimen/Playfair+Display)
 (serifada) para logo/títulos, [Inter](https://fonts.google.com/specimen/Inter)
 para corpo de texto e formulário — via `next/font/google` em `app/layout.tsx`.
 
+A primeira versão usava cards de resultado em creme/branco — depois de ver a
+aplicação publicada, o feedback foi que o branco destoava do resto do tema, e
+que os "arabiscos" (linhas decorativas ao lado dos rótulos de seção) tinham
+"cara de IA" e pouca identidade própria. Os cards passaram para o tema escuro
+(consistente com o resto da tela) e as linhas decorativas foram removidas dos
+rótulos.
+
 Texto corrido usa branco/creme sobre preto (nunca dourado sobre preto em
-blocos de texto), pensando em contraste desde já para a revisão de
-acessibilidade prevista em [Próximos passos](#próximos-passos).
+blocos de texto) — decisão que também sustenta os contrastes corrigidos na
+revisão de acessibilidade, ver [Acessibilidade, responsividade e
+segurança](#acessibilidade-responsividade-e-segurança).
 
 ## Stack e decisões técnicas
 
@@ -214,12 +222,89 @@ Aplicação publicada na Vercel: **https://localizador-revendedoras.vercel.app/*
 Deploy automático a partir do repositório Git — sem variáveis de ambiente
 necessárias.
 
-## Próximos passos
+## Acessibilidade, responsividade e segurança
 
-Etapa seguinte, ainda não incluída nesta versão: revisão dedicada de
-acessibilidade (navegação por teclado, `aria-label`s, contraste formal
-WCAG), responsividade em mais breakpoints/dispositivos reais, e segurança
-(headers HTTP, rate limiting do endpoint de busca, revisão de dependências).
+### Acessibilidade
+
+- **Contraste**: o tema escuro usava opacidade (`text-foreground/40`) para
+  texto secundário em vários pontos (CEP no card, rodapé, subtítulo do
+  header, placeholder). Calculado manualmente, `/40` sobre o fundo onyx dá
+  contraste ~3.6:1 — abaixo do mínimo de 4.5:1 do WCAG AA para texto normal.
+  Todos esses casos foram revistos para `/60`+ (~6.8:1), passando AA com
+  folga.
+- **Navegação por teclado**: `focus-visible` explícito (anel dourado) em
+  todos os botões e links interativos — o outline padrão do navegador nem
+  sempre é visível sobre o fundo escuro.
+- **Skip link**: link "Pular para o conteúdo" (visível só ao focar via
+  teclado) no `BrandHeader`, para pular a navegação do cabeçalho.
+- **Landmarks e heading**: `<header>`/`<main>`/`<footer>` semânticos; a tela
+  de resultados ganhou um `<h1>` próprio ("Resultados da busca"), que antes
+  não existia.
+- **Live regions**: o spinner de carregamento usa `role="status"
+  aria-live="polite"` e a mensagem de erro usa `role="alert"`, para leitores
+  de tela anunciarem mudanças de estado sem precisar de foco manual.
+- **Lista ordenada**: os resultados usam `<ol>` (antes `<ul>`) — a ordem por
+  distância é informação relevante, e leitores de tela anunciam a posição de
+  cada item numa lista ordenada.
+- **Links externos**: o botão "Ver rota" tem `aria-label` explicando que
+  abre o Google Maps em nova aba.
+- **Mapa**: como o Leaflet não é acessível por natureza (tiles/marcadores em
+  canvas/DOM sem semântica), o card do mapa tem `role="region"` com
+  `aria-label`, e a lista de resultados funciona de forma independente dele
+  (nenhuma informação existe *só* no mapa).
+
+### Responsividade
+
+- Layout mobile-first já existia desde a primeira versão (grid de 1 coluna
+  no formulário e nos resultados, 2 colunas a partir de `lg:`).
+  Nesta revisão: `flex-wrap` no cabeçalho (evita overflow horizontal em
+  telas muito estreitas) e alvos de toque maiores nos chips de exemplo e nas
+  ações da lista (`py-1` → `py-1.5`, alinhado à recomendação de ~44px de
+  área clicável em mobile).
+- **Limitação**: sem ferramenta de browser/emulador neste ambiente, a
+  responsividade foi verificada lendo o CSS gerado e testando os
+  breakpoints do Tailwind, não visualmente em dispositivos reais.
+
+### Segurança
+
+- **Headers HTTP** (`next.config.ts`): `Content-Security-Policy`,
+  `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`,
+  `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`
+  (bloqueia câmera/microfone/geolocalização, não usados pela aplicação) e
+  `Strict-Transport-Security`.
+- **CSP sem nonce**: a política segue o guia oficial do Next.js para
+  aplicações sem *dynamic rendering*
+  (`node_modules/next/dist/docs/.../content-security-policy.md`, seção
+  "Without Nonces") — `script-src`/`style-src` incluem `'unsafe-inline'`
+  porque o Leaflet aplica estilos inline via JS para posicionar
+  tiles/marcadores, e o Next não teria como aplicar nonce sem forçar
+  renderização dinâmica em `/` e `/resultados` (perdendo o pré-render
+  estático). Uma CSP mais estrita com nonce é possível como endurecimento
+  futuro, ao custo de desativar a otimização estática dessas páginas.
+- **Rate limiting best-effort** (`lib/rateLimit.ts`): `/api/search` limita a
+  20 requisições por minuto por IP (`x-forwarded-for`), em memória. Isso é
+  *best-effort*, não uma solução distribuída — numa função serverless
+  (Vercel) o contador não é compartilhado entre instâncias e zera a cada
+  cold start. Suficiente para coibir abuso trivial de um único cliente
+  (inclusive protegendo o ViaCEP/Nominatim, que são serviços gratuitos de
+  terceiros); um rate limit robusto em produção real usaria um store
+  compartilhado (ex: Upstash Redis).
+- **CORS**: nenhum header de CORS foi adicionado de propósito — sem eles, o
+  navegador aplica same-origin por padrão, e `/api/search` só é chamável
+  pela própria aplicação. Adicionar CORS permissivo *reduziria* a segurança
+  sem necessidade real (não há consumidores externos da API).
+- **Validação e sanitização**: toda entrada do usuário passa por Zod no
+  back-end (`lib/types.ts`); nenhum dado do usuário é injetado em HTML sem
+  passar pelo escaping automático do JSX/React (sem `dangerouslySetInnerHTML`
+  com conteúdo dinâmico em nenhum componente) nem em comandos de shell/SQL.
+- **`npm audit`**: aponta uma vulnerabilidade moderada de XSS numa versão
+  antiga do PostCSS, mas é uma dependência transitiva *interna* do próprio
+  Next.js (`node_modules/next/node_modules/postcss`), usada só no pipeline
+  de build do framework — não processa CSS vindo de usuários nesta aplicação,
+  então não é explorável no nosso uso. A correção sugerida pelo
+  `npm audit fix --force` rebaixaria o Next.js para a versão 9 (quebra
+  completa do projeto) e foi descartada; a vulnerabilidade real só se
+  resolve com uma atualização do próprio Next.js.
 
 ## Uso de Inteligência Artificial
 
@@ -274,3 +359,24 @@ O que foi revisado e validado manualmente:
   (regra `react-hooks/set-state-in-effect`); o `npm run lint` acusou o
   problema, o efeito foi reestruturado para não depender desse `setState`
   redundante, e o lint voltou a passar limpo antes do commit.
+- **Contraste calculado, não estimado**: os contrastes de texto citados na
+  seção de acessibilidade foram calculados manualmente (fórmula de
+  luminância relativa do WCAG) para cada combinação de opacidade usada no
+  tema, não apenas "parecem legíveis" — isso é o que definiu quais classes
+  precisavam mudar e para qual valor.
+- **CSP verificada, não só escrita**: antes de fechar a política de
+  segurança, foi consultada a documentação local do Next.js
+  (`node_modules/next/dist/docs`) para confirmar a abordagem correta para
+  este projeto (sem nonce, já que as páginas são estáticas) em vez de
+  inventar uma CSP arbitrária — e a política foi testada rodando a
+  aplicação e conferindo os headers de resposta reais via `curl`.
+- **Rate limit testado de verdade**: depois de implementar, uma rajada real
+  de 25 requisições foi disparada contra o servidor local para confirmar
+  que o bloqueio (HTTP 429) realmente acontece após o limite, em vez de
+  assumir que a lógica estava correta só pela leitura do código.
+- **Limitação assumida, não escondida**: como o ambiente não tem ferramenta
+  de browser, a validação de acessibilidade (foco visível, contraste) e
+  responsividade foi feita por leitura de código/CSS e cálculo manual, não
+  por teste visual real com leitor de tela ou dispositivo — isso está
+  declarado explicitamente na seção acima em vez de apresentado como
+  totalmente validado.
