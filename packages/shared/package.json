@@ -1,0 +1,8 @@
+{
+  "name": "@localizador/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tipos e schemas Zod compartilhados entre o app web (Next.js) e o app mobile (Expo).",
+  "main": "types.ts",
+  "types": "types.ts"
+}
