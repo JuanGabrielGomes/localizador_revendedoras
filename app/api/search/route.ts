@@ -6,12 +6,23 @@ import {
   lookupCep,
   ViaCepNotFoundError,
 } from "@/lib/geocoding";
+import { getClientKey, isRateLimited } from "@/lib/rateLimit";
 import { findNearestRevendedoras } from "@/lib/resellers";
 import { SearchInputSchema, type SearchResponse } from "@/lib/types";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  if (isRateLimited(getClientKey(request))) {
+    return NextResponse.json(
+      {
+        error:
+          "Muitas buscas em pouco tempo. Aguarde um instante e tente novamente.",
+      },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
