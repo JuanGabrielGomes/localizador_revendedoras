@@ -20,6 +20,7 @@ e dourado) inspirada na Sorelly Joias.
 - [Testes](#testes)
 - [Deploy](#deploy)
 - [Acessibilidade, responsividade e segurança](#acessibilidade-responsividade-e-segurança)
+- [Escopo do teste e melhorias futuras](#escopo-do-teste-e-melhorias-futuras)
 - [Uso de Inteligência Artificial](#uso-de-inteligência-artificial)
 
 ## Como rodar localmente
@@ -117,7 +118,7 @@ segurança](#acessibilidade-responsividade-e-segurança).
 | Estilo | Tailwind CSS | Componentização rápida e consistente, responsivo por padrão |
 | Validação | Zod | Valida entrada do usuário e integridade dos dados de revendedoras em runtime |
 | Mapa | Leaflet + react-leaflet + tiles OpenStreetMap | Gratuito, sem necessidade de API key — importante para que o avaliador rode o projeto sem configurar billing |
-| Geocodificação | ViaCEP (CEP → endereço) + Nominatim/OSM (endereço → lat/long) | Também gratuitos e sem API key |
+| Geocodificação | ViaCEP (CEP → endereço) + Nominatim/OSM, com fallback para Photon (endereço → lat/long) | Gratuitos, sem API key, e com um segundo provedor caso o principal falhe |
 | Cálculo de distância | Fórmula de Haversine (distância em linha reta) | Suficiente para ordenar por proximidade sem depender de uma API de rotas paga |
 | Link de rota | URL do Google Maps Directions (`/maps/dir/?api=1&destination=lat,lng`) | Não exige API key, atende ao requisito de "link para criação de rota" |
 | Testes | Vitest | Cobre a lógica de negócio (distância, validação, montagem de queries de geocodificação) |
@@ -143,6 +144,31 @@ achou o endereço exato e a busca recuou para bairro+cidade ou só cidade;
 revendedoras, 156 foram geocodificadas com precisão exata e 44 de forma
 aproximada; nenhuma falhou.
 
+### Geocoder de fallback e cache (`lib/geocoding.ts`)
+
+**Fallback**: a busca em tempo real (endereço digitado pelo usuário) tentava
+só o Nominatim — se ele estivesse fora do ar, a busca inteira falhava. Agora,
+se o Nominatim não responder (erro de rede/indisponibilidade) **ou** não
+encontrar nada, a aplicação tenta o [Photon](https://photon.komoot.io/) (da
+Komoot) como segundo provedor — também gratuito, sem API key, também
+baseado em dados OpenStreetMap, mas com índice de busca independente do
+Nominatim (por isso às vezes encontra o que o outro não encontra). Coberto
+por testes que forçam os dois cenários (erro de rede e "sem resultados") via
+mock de `fetch`.
+
+**Cache em duas camadas**:
+1. Um `Map` em memória do processo (`geocodeCache`) — atalho instantâneo
+   para a mesma query repetida na mesma instância quente, inclusive cacheando
+   o resultado "não encontrado" (o que a camada 2 sozinha não faria).
+2. `fetch(..., { next: { revalidate: <30 dias> } })` nas chamadas ao ViaCEP,
+   Nominatim e Photon — isso ativa o *Data Cache* do Next.js, que na Vercel
+   é persistente entre invocações/cold starts (não é só memória do processo
+   como o `Map`), sem precisar configurar nenhum serviço externo (Redis,
+   KV, etc.). Endereço → coordenada não muda, então um TTL longo é seguro.
+   Fora do runtime do Next (ex: `scripts/geocode-seed.ts`, rodado via `tsx`
+   puro), essa opção é simplesmente ignorada pelo fetch nativo do Node —
+   inofensivo.
+
 ### Estrutura de pastas
 
 ```
@@ -159,8 +185,9 @@ components/
 lib/
   types.ts                      → schemas Zod e tipos compartilhados
   distance.ts                    → cálculo de distância (Haversine)
-  geocoding.ts                    → integração com ViaCEP e Nominatim
+  geocoding.ts                    → integração com ViaCEP, Nominatim e Photon (fallback), com cache
   resellers.ts                     → carrega/filtra/ordena as revendedoras
+  rateLimit.ts                      → rate limit best-effort do endpoint de busca
 data/
   revendedoras-original.csv         → CSV original, como recebido
   revendedoras-raw.csv               → CSV com encoding corrigido
@@ -202,9 +229,11 @@ está em `lib/resellers.ts`.
 npm run test
 ```
 
-Cobertura: cálculo de distância (Haversine), validação de entrada
-(`SearchInputSchema`) e montagem da query de geocodificação
-(`buildAddressQuery`) — a lógica de negócio central da aplicação.
+Cobertura (22 testes): cálculo de distância (Haversine), validação de entrada
+(`SearchInputSchema`), montagem da query de geocodificação
+(`buildAddressQuery`), o fallback Nominatim → Photon e o cache em memória
+(mockando `fetch` para forçar erro de rede e "sem resultados"), e o rate
+limiter (limite, expiração da janela, isolamento por IP).
 
 ## Regerando os dados geocodificados
 
@@ -306,6 +335,76 @@ necessárias.
   completa do projeto) e foi descartada; a vulnerabilidade real só se
   resolve com uma atualização do próprio Next.js.
 
+## Escopo do teste e melhorias futuras
+
+Este projeto foi construído com um escopo deliberadamente limitado ao que o
+teste técnico pede, num prazo curto. As lacunas abaixo são conscientes — não
+foram "esquecidas", foram avaliadas e adiadas — e ficam documentadas aqui
+para deixar claro o que mudaria numa aplicação real de produção.
+
+### O que ficaria de fora de um MVP e foi deixado como melhoria futura
+
+- **Mais resultados / paginação**: hoje a busca sempre retorna as 10
+  revendedoras mais próximas (fixo). Um raio configurável ou "carregar
+  mais" seria natural numa v2.
+- **Testes de integração da API route**: os 22 testes automatizados cobrem
+  `lib/` (distância, validação, geocoding, rate limit) isoladamente; o fluxo
+  completo do `POST /api/search` foi validado manualmente via `curl`
+  durante o desenvolvimento, não por um teste automatizado de ponta a ponta.
+- **React Native / Expo**: citado como diferencial no edital, não foi feito
+  — decisão de escopo tomada no início do projeto (web-only) para priorizar
+  qualidade sobre cobertura de plataformas.
+- **CSP com nonce**: a política atual usa `unsafe-inline` (ver
+  [Segurança](#acessibilidade-responsividade-e-segurança)); uma CSP mais
+  estrita exigiria abrir mão do pré-render estático de `/` e `/resultados`.
+- **Observabilidade**: sem logging estruturado nem monitoramento de erro em
+  produção (ex: Sentry) — hoje só `console.error` no servidor, visível nos
+  logs da Vercel.
+- **Validação visual real**: o ambiente de desenvolvimento usado não tem
+  ferramenta de browser/emulador. Contraste, foco visível e responsividade
+  foram validados por cálculo/leitura de CSS (ver seção anterior), não por
+  inspeção visual em navegador ou leitor de tela real. Recomendo essa
+  conferência manual antes de considerar a interface 100% validada.
+
+### Riscos conhecidos, aceitos para o escopo de um teste técnico
+
+Nenhum destes é um problema de "não pensei nisso" — são trade-offs
+conscientes que fariam sentido revisitar numa aplicação real com dados de
+clientes de verdade e tráfego de produção:
+
+- **Rate limit não distribuído**: `lib/rateLimit.ts` é em memória por
+  instância; um atacante distribuindo requisições entre múltiplas instâncias
+  serverless (ou esperando um cold start) consegue passar do limite. Uma
+  solução real usaria um store compartilhado (ex: Upstash Redis) — não
+  incluído para não depender de infraestrutura paga/externa num teste.
+- **Sem proteção contra scraping automatizado**: nada impede um script de
+  varrer bairros sistematicamente via `/api/search` e reconstruir a base
+  completa de revendedoras (nome, endereço, coordenadas). Para uma rede de
+  revendedoras real, isso pode ser informação sensível de negócio
+  (concorrentes mapeando a rede) — mitigaria com CAPTCHA/autenticação ou um
+  rate limit bem mais agressivo.
+- **`npm audit`**: uma vulnerabilidade moderada transitiva no PostCSS interno
+  do próprio Next.js (não explorável no nosso uso — ver
+  [Segurança](#acessibilidade-responsividade-e-segurança) para detalhe);
+  resolve sozinha quando o Next.js atualizar essa dependência.
+- **CSP com `unsafe-inline`**: enfraquece uma camada de defesa contra XSS
+  (mitigado por padrão pelo React escapar JSX, mas é uma camada a menos).
+- **HTTPS depende só da plataforma**: nenhum redirect HTTP→HTTPS customizado
+  no código — depende inteiramente da Vercel forçar HTTPS por padrão.
+- **Dados em texto plano no repositório público**: `data/revendedoras.json`
+  (nomes, endereços, CEPs) está público no GitHub. Aceitável porque é a base
+  fictícia (`Base_200_Revendedoras_Fake`) fornecida pelo próprio teste — mas
+  numa aplicação real com dados de pessoas verdadeiras isso não deveria ser
+  versionado em texto plano num repositório público, e sim vir de um banco
+  privado.
+
+O que **já não é** mais um risco em aberto, corrigido durante o
+desenvolvimento: dependência de um único provedor de geocodificação (agora
+tem fallback Photon, ver [Stack e decisões
+técnicas](#stack-e-decisões-técnicas)) e cache de geocodificação que não
+sobrevivia a cold starts em serverless (agora usa o Data Cache do Next.js,
+que persiste na Vercel).
+
 ## Uso de Inteligência Artificial
 
 Este projeto foi desenvolvido com apoio do **Claude Code** (Anthropic) do
@@ -380,3 +479,15 @@ O que foi revisado e validado manualmente:
   por teste visual real com leitor de tela ou dispositivo — isso está
   declarado explicitamente na seção acima em vez de apresentado como
   totalmente validado.
+- **Mecanismo de cache verificado na documentação, não assumido**: antes de
+  usar `fetch(..., { next: { revalidate } })` como cache persistente, foi
+  necessário confirmar que o projeto *não* tem `cacheComponents` ativado
+  (Next 16 muda o modelo de cache quando essa flag está ligada) — checado
+  lendo `node_modules/next/dist/docs` — para garantir que a API de cache
+  usada é a correta para este projeto específico, e não uma suposição
+  baseada em versões anteriores do Next.js.
+- **Fallback de geocoding testado com falha forçada, não só com o caminho
+  feliz**: os testes de `geocodeAddress` mockam `fetch` para simular o
+  Nominatim caindo (erro de rede) e o Nominatim respondendo "sem
+  resultados" separadamente — as duas causas reais de fallback — em vez de
+  só testar o cenário em que tudo funciona.
