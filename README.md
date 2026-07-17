@@ -2,18 +2,24 @@
 
 Aplicação web que permite buscar as revendedoras mais próximas de um endereço
 informado (CEP, rua/avenida, número e/ou bairro), com resultados ordenados por
-distância, exibidos em mapa e com link para rota no Google Maps.
+distância, exibidos em mapa e com link para rota no Google Maps. A busca
+acontece em uma tela (`/`) e os resultados abrem em uma segunda tela
+(`/resultados`).
 
-Teste técnico desenvolvido para processo seletivo.
+Teste técnico desenvolvido para processo seletivo — identidade visual (preto
+e dourado) inspirada na Sorelly Joias.
 
 ## Sumário
 
 - [Como rodar localmente](#como-rodar-localmente)
 - [Como buscar (dados de exemplo)](#como-buscar-dados-de-exemplo)
+- [Fluxo de telas](#fluxo-de-telas)
+- [Design e identidade visual](#design-e-identidade-visual)
 - [Stack e decisões técnicas](#stack-e-decisões-técnicas)
 - [Tratamento de dados e erros](#tratamento-de-dados-e-erros)
 - [Testes](#testes)
 - [Deploy](#deploy)
+- [Próximos passos](#próximos-passos)
 - [Uso de Inteligência Artificial](#uso-de-inteligência-artificial)
 
 ## Como rodar localmente
@@ -59,6 +65,42 @@ endereços reais das mesmas cidades da base (ex: CEP real de Curitiba, bairro
 Centro/Curitiba, bairro Zona 01/Maringá). Também é possível buscar por
 qualquer CEP, rua ou bairro real do Paraná (onde está concentrada a base).
 
+## Fluxo de telas
+
+1. **`/` (busca)** — landing com o formulário (CEP, rua, número, bairro). Ao
+   enviar, a aplicação navega para `/resultados` passando os campos
+   preenchidos como query string (ex: `/resultados?bairro=Centro&cidade=Curitiba`).
+2. **`/resultados` (resultados)** — segunda tela. Lê os parâmetros da URL,
+   chama a mesma API de busca (`POST /api/search`) e exibe o endereço
+   resolvido, a lista de revendedoras ordenada por distância e o mapa. Tem
+   link de volta ("← Nova busca") para a tela de busca.
+
+Essa separação em duas rotas (em vez de mostrar tudo inline na mesma tela)
+também torna o resultado de uma busca compartilhável por URL e navegável pelo
+botão voltar do navegador.
+
+## Design e identidade visual
+
+A paleta (preto/onyx + dourado + creme) foi inspirada na estética da
+[Sorelly Joias](https://sorellyjoias.com.br/), mas definida por conta própria
+— não foram extraídos hex codes, fontes exatas nem nenhum asset (imagem,
+logo) do site de referência; as ferramentas disponíveis não permitem inspecionar
+CSS computado nem tirar screenshots, então a paleta abaixo é uma composição
+própria dentro do mesmo espírito visual (joalheria de luxo), não uma cópia
+pixel a pixel:
+
+- `#0b0b0d` (onyx) — fundo principal
+- `#c9a227` (dourado) — acentos, botões, bordas
+- `#faf6ee` (creme) — fundo dos cards de resultado e do mapa
+
+Tipografia: [Playfair Display](https://fonts.google.com/specimen/Playfair+Display)
+(serifada) para logo/títulos, [Inter](https://fonts.google.com/specimen/Inter)
+para corpo de texto e formulário — via `next/font/google` em `app/layout.tsx`.
+
+Texto corrido usa branco/creme sobre preto (nunca dourado sobre preto em
+blocos de texto), pensando em contraste desde já para a revisão de
+acessibilidade prevista em [Próximos passos](#próximos-passos).
+
 ## Stack e decisões técnicas
 
 | Camada | Escolha | Por quê |
@@ -97,13 +139,15 @@ aproximada; nenhuma falhou.
 
 ```
 app/
-  page.tsx              → página principal (busca + resultados + mapa)
-  api/search/route.ts    → endpoint de busca (POST)
+  page.tsx              → tela de busca (landing + SearchForm)
+  resultados/page.tsx    → segunda tela: lê query params, busca e exibe resultados + mapa
+  api/search/route.ts     → endpoint de busca (POST)
 components/
-  SearchForm.tsx          → formulário de busca (CEP, rua, número, bairro)
-  ResultsList.tsx           → lista de resultados
-  ResellerCard.tsx            → card de cada revendedora (com link de rota)
-  MapView.tsx                  → mapa Leaflet com marcadores
+  BrandHeader.tsx           → cabeçalho/logo compartilhado entre as duas telas
+  SearchForm.tsx             → formulário de busca (CEP, rua, número, bairro)
+  ResultsList.tsx              → lista de resultados
+  ResellerCard.tsx               → card de cada revendedora (com link de rota)
+  MapView.tsx                     → mapa Leaflet com marcadores customizados
 lib/
   types.ts                      → schemas Zod e tipos compartilhados
   distance.ts                    → cálculo de distância (Haversine)
@@ -170,6 +214,13 @@ Aplicação publicada na Vercel: **https://localizador-revendedoras.vercel.app/*
 Deploy automático a partir do repositório Git — sem variáveis de ambiente
 necessárias.
 
+## Próximos passos
+
+Etapa seguinte, ainda não incluída nesta versão: revisão dedicada de
+acessibilidade (navegação por teclado, `aria-label`s, contraste formal
+WCAG), responsividade em mais breakpoints/dispositivos reais, e segurança
+(headers HTTP, rate limiting do endpoint de busca, revisão de dependências).
+
 ## Uso de Inteligência Artificial
 
 Este projeto foi desenvolvido com apoio do **Claude Code** (Anthropic) do
@@ -212,3 +263,14 @@ O que foi revisado e validado manualmente:
 - Toda a lógica de negócio (filtro de status, ordenação por distância, limite
   de resultados) foi lida e conferida linha a linha, não apenas gerada e
   aceita.
+- **Redesign visual e rota `/resultados`**: a IA gerou a paleta de cores, a
+  restilização dos componentes e a separação da busca em duas telas — mas a
+  decisão de *não* tentar extrair cores/fontes exatas do site de referência
+  (por falta de ferramenta adequada no ambiente) e de não reutilizar nenhum
+  asset de terceiros foi explicitada e validada antes de implementar, para
+  não passar a impressão de ser um clone do site real.
+- **Erro de lint pego antes do commit**: a primeira versão da tela de
+  resultados chamava `setState` de forma síncrona dentro de um `useEffect`
+  (regra `react-hooks/set-state-in-effect`); o `npm run lint` acusou o
+  problema, o efeito foi reestruturado para não depender desse `setState`
+  redundante, e o lint voltou a passar limpo antes do commit.
