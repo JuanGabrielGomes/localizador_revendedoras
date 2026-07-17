@@ -150,9 +150,10 @@ export function SearchForm({ onSubmit, initialValues }: SearchFormProps) {
 
       <button
         type="submit"
-        className="self-start rounded-md bg-gold px-6 py-2.5 text-sm font-semibold text-onyx transition hover:bg-gold-light"
+        className="mx-auto flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-onyx transition hover:bg-gold-light sm:max-w-sm"
       >
         Buscar revendedoras
+        <span aria-hidden="true">→</span>
       </button>
     </form>
   );

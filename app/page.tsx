@@ -33,12 +33,15 @@ export default function Home() {
         />
 
         <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col items-center gap-10 px-4 py-16 sm:px-6 sm:py-24">
-          <div className="flex max-w-2xl flex-col items-center gap-4 text-center">
-            <span className="text-xs font-medium tracking-[0.3em] text-gold uppercase">
+          <div className="flex max-w-2xl flex-col items-center gap-5 text-center">
+            <span className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] text-gold uppercase">
+              <span className="h-px w-8 bg-gold/50" />
               Rede de Revendedoras
+              <span className="h-px w-8 bg-gold/50" />
             </span>
-            <h1 className="font-serif text-3xl leading-tight text-foreground sm:text-5xl">
-              Encontre a revendedora Sorelly mais próxima de você
+            <h1 className="max-w-xl text-3xl leading-tight font-extrabold text-foreground sm:text-5xl">
+              Encontre a revendedora{" "}
+              <span className="text-gold">mais próxima de você</span>
             </h1>
             <p className="max-w-xl text-sm text-foreground/60 sm:text-base">
               Informe seu CEP, ou rua e bairro, e veja as revendedoras
