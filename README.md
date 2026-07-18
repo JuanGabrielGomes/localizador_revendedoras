@@ -4,7 +4,9 @@ Aplicação web que permite buscar as revendedoras mais próximas de um endereç
 informado (CEP, rua/avenida, número e/ou bairro), com resultados ordenados por
 distância, exibidos em mapa e com link para rota no Google Maps. A busca
 acontece em uma tela (`/`) e os resultados abrem em uma segunda tela
-(`/resultados`).
+(`/resultados`). Inclui também um app mobile (React Native/Expo, ver
+[App mobile](#app-mobile-diferencial)) que reaproveita a mesma API — as duas
+plataformas coexistem no mesmo repositório.
 
 Teste técnico desenvolvido para processo seletivo — identidade visual (preto
 e dourado) inspirada na Sorelly Joias.
@@ -19,6 +21,7 @@ e dourado) inspirada na Sorelly Joias.
 - [Tratamento de dados e erros](#tratamento-de-dados-e-erros)
 - [Testes](#testes)
 - [Deploy](#deploy)
+- [App mobile (diferencial)](#app-mobile-diferencial)
 - [Acessibilidade, responsividade e segurança](#acessibilidade-responsividade-e-segurança)
 - [Escopo do teste e melhorias futuras](#escopo-do-teste-e-melhorias-futuras)
 - [Uso de Inteligência Artificial](#uso-de-inteligência-artificial)
@@ -195,6 +198,9 @@ data/
 scripts/
   fix-encoding.ts                      → corrige o encoding do CSV original
   geocode-seed.ts                       → gera revendedoras.json
+packages/shared/
+  types.ts                              → tipos/schemas Zod compartilhados com o app mobile
+mobile/                                  → app React Native/Expo (diferencial) — ver mobile/README.md
 ```
 
 ### Decisão de produto: filtro de status
@@ -250,6 +256,35 @@ Aplicação publicada na Vercel: **https://localizador-revendedoras.vercel.app/*
 
 Deploy automático a partir do repositório Git — sem variáveis de ambiente
 necessárias.
+
+## App mobile (diferencial)
+
+O diferencial React Native/Expo citado no edital foi implementado em
+[`mobile/`](mobile/) — **sem alterar em nada o funcionamento do app web**.
+Documentação completa (como rodar, arquitetura, trade-offs) em
+[`mobile/README.md`](mobile/README.md); resumo abaixo.
+
+**Reuso, não duplicação**: o app mobile não reimplementa geocoding,
+distância, filtro ou dados — ele é um cliente fino da mesma API já publicada
+(`POST /api/search`). O único código de fato compartilhado entre web e
+mobile são os tipos/schemas Zod, extraídos para `packages/shared/types.ts`
+(`lib/types.ts` agora reexporta de lá — a única linha de código do app web
+que mudou para isso acontecer, coberta pelos testes existentes).
+
+**Coexistência garantida**: `mobile/` é um projeto Node/npm totalmente
+independente (seu próprio `package.json`), fora de qualquer workspace do
+repositório — `npm install`/`npm run build` na raiz (o que a Vercel executa)
+nunca tocam nas dependências do Expo. `npm run build && npm run test` do
+projeto web continuam 100% verdes depois da adição do mobile.
+
+**Mapa via WebView, não `react-native-maps`**: para manter o mesmo princípio
+de "zero API key" do web, o mapa do app mobile roda o mesmo Leaflet/OSM
+dentro de uma `WebView`, em vez de `react-native-maps` (que exigiria API key
+paga do Google Maps no Android). Trade-off documentado no README do mobile.
+
+**Diferencial extra**: botão "usar minha localização atual" (`expo-location`
++ geocodificação reversa direto no app) — um recurso que só faz sentido no
+mobile, não uma cópia do web.
 
 ## Acessibilidade, responsividade e segurança
 
@@ -351,9 +386,6 @@ para deixar claro o que mudaria numa aplicação real de produção.
   `lib/` (distância, validação, geocoding, rate limit) isoladamente; o fluxo
   completo do `POST /api/search` foi validado manualmente via `curl`
   durante o desenvolvimento, não por um teste automatizado de ponta a ponta.
-- **React Native / Expo**: citado como diferencial no edital, não foi feito
-  — decisão de escopo tomada no início do projeto (web-only) para priorizar
-  qualidade sobre cobertura de plataformas.
 - **CSP com nonce**: a política atual usa `unsafe-inline` (ver
   [Segurança](#acessibilidade-responsividade-e-segurança)); uma CSP mais
   estrita exigiria abrir mão do pré-render estático de `/` e `/resultados`.
@@ -401,9 +433,26 @@ clientes de verdade e tráfego de produção:
 O que **já não é** mais um risco em aberto, corrigido durante o
 desenvolvimento: dependência de um único provedor de geocodificação (agora
 tem fallback Photon, ver [Stack e decisões
-técnicas](#stack-e-decisões-técnicas)) e cache de geocodificação que não
+técnicas](#stack-e-decisões-técnicas)), cache de geocodificação que não
 sobrevivia a cold starts em serverless (agora usa o Data Cache do Next.js,
-que persiste na Vercel).
+que persiste na Vercel), e o diferencial React Native/Expo, que não estava
+no escopo inicial e foi adicionado depois (ver [App mobile
+(diferencial)](#app-mobile-diferencial)) sem alterar o app web.
+
+### Riscos específicos do app mobile
+
+- **Não testado em dispositivo físico real** neste ambiente de
+  desenvolvimento (sem Expo Go disponível aqui) — verificado via typecheck,
+  lint, bundle sem erros e renderização real por Chromium headless
+  (`--dump-dom`), mas recomenda-se validar via Expo Go antes de considerar
+  100% pronto.
+- **Alvo web do Expo (`expo start --web`) não funciona** por causa de CORS —
+  `/api/search` não tem headers de CORS (decisão deliberada, ver
+  [Segurança](#acessibilidade-responsividade-e-segurança)) e o navegador
+  bloqueia a resposta. Isso não afeta o app nativo (Expo Go/build), que não
+  passa pelo mecanismo de CORS do navegador — só o preview web, que nem é o
+  alvo real desse diferencial. Detalhe completo em
+  [`mobile/README.md`](mobile/README.md).
 
 ## Uso de Inteligência Artificial
 
@@ -491,3 +540,18 @@ O que foi revisado e validado manualmente:
   Nominatim caindo (erro de rede) e o Nominatim respondendo "sem
   resultados" separadamente — as duas causas reais de fallback — em vez de
   só testar o cenário em que tudo funciona.
+- **App mobile: reuso real verificado, não assumido**: depois de configurar
+  o Metro para resolver `packages/shared` fora da pasta `mobile/`, o bundle
+  web do Expo foi de fato gerado (960 módulos, zero erro) e a página
+  renderizada com Chromium headless antes de considerar a integração
+  funcionando — não bastou o `tsc` passar.
+- **Falha investigada até a causa raiz, não só contornada**: ao testar o
+  app mobile no alvo web e ver a busca falhar, a causa foi apurada (CORS,
+  confirmado lendo o console do Chromium headless via `--enable-logging`)
+  antes de decidir não mexer na API — evitando tanto "ignorar o erro" quanto
+  "adicionar CORS permissivo sem necessidade" só para fazer o sintoma sumir.
+- **Decisão de não adicionar `react-native-maps`**: avaliada e descartada
+  deliberadamente por exigir API key paga do Google Maps no Android,
+  quebrando o princípio de "zero API key" seguido no restante do projeto —
+  WebView com o mesmo Leaflet do web foi a alternativa escolhida, com o
+  trade-off documentado em vez de escondido.
