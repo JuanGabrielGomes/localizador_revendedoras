@@ -557,9 +557,20 @@ O que foi revisado e validado manualmente:
   trade-off documentado em vez de escondido.
 - **Incompatibilidade de versão do Expo Go resolvida, não contornada às
   cegas**: ao testar no celular, o Expo Go acusou incompatibilidade de SDK
-  (o scaffold pegou a SDK 57, mais nova que o Expo Go publicado nas lojas na
-  época). Em vez de tentar forçar/ignorar o aviso, o projeto foi realinhado
-  para a SDK 56 via `npx expo install expo@^56.0.0 && npx expo install
-  --fix` (o mecanismo oficial do Expo para isso), e todo o app foi
-  rebundlado e reconferido depois — documentado em `mobile/README.md` para
-  quem passar pelo mesmo problema numa reinstalação futura.
+  (o scaffold pegou a SDK 57, mais nova que o Expo Go publicado nas lojas).
+  A primeira tentativa de realinhar para a SDK 56 não bastou — o Expo Go
+  instalado pelo usuário estava na SDK 54, dois majors atrás do scaffold
+  original. Reajustado para SDK 54 via `expo install expo@^54.0.0 --fix` e
+  reinstalação limpa (`rm -rf node_modules && npm install`, necessário
+  porque a troca de SDK no meio do caminho deixou um conflito de peer
+  dependencies). Um segundo problema apareceu na sequência — `app.json`
+  tinha entradas em `plugins` para pacotes (`expo-image`, `expo-web-browser`,
+  depois `expo-font`, `expo-status-bar`) que não exportam um config plugin de
+  verdade, quebrando o `expo start` com "Unable to resolve a valid config
+  plugin". Investigado até a causa raiz (não só suprimido) e resolvido
+  removendo essas entradas — a maioria eram, de fato, dependências não
+  usadas, sobras dos componentes de demonstração do template já apagados, e
+  foram removidas do `package.json` também, não só do `plugins`. Rebundlado
+  e reconferido via Chromium headless depois de cada mudança — documentado
+  em `mobile/README.md` para quem passar pelo mesmo problema numa
+  reinstalação futura.

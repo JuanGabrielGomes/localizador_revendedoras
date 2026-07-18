@@ -25,17 +25,34 @@ Celular e computador precisam estar na mesma rede Wi-Fi. Se isso não for
 possível (redes separadas/corporativas), use `npx expo start --tunnel` — a
 conexão passa pelos servidores da Expo em vez da rede local.
 
-> **Nota sobre versão do SDK**: o projeto está fixado na Expo SDK 56
-> (`expo": "^56.0.0"`) de propósito, mesmo já existindo SDK 57 no npm. O app
+> **Nota sobre versão do SDK**: o projeto está fixado na Expo SDK 54
+> (`"expo": "^54.0.0"`) de propósito, mesmo já existindo SDK 57 no npm. O app
 > Expo Go publicado nas lojas segue sempre **uma única versão de SDK por
-> vez**, e normalmente há uma defasagem entre o SDK mais novo publicado no
-> npm e o que já chegou na loja — instalar `npx create-expo-app@latest` pega
-> o mais novo do npm, que pode ainda não ser compatível com o Expo Go que
-> você acabou de baixar. Se aparecer o erro "Project is incompatible with
-> this version of Expo Go", o projeto provavelmente precisa ser alinhado à
-> versão de SDK que o Expo Go da loja realmente suporta no momento
-> (`npx expo install expo@<versão> && npx expo install --fix` dentro de
-> `mobile/`).
+> vez**, e normalmente há uma defasagem grande entre o SDK mais novo
+> publicado no npm e o que já chegou na loja — `npx create-expo-app@latest`
+> pega sempre o mais novo do npm, que na prática costuma estar 2-3 versões
+> à frente do que o Expo Go da Play Store/App Store realmente suporta no
+> momento. Se aparecer o erro "Project is incompatible with this version of
+> Expo Go", confira no próprio app Expo Go (tela inicial ou "About") qual
+> SDK ele suporta, e alinhe o projeto a essa versão:
+>
+> ```bash
+> cd mobile
+> npx expo install expo@<versão-do-sdk-suportada> --fix
+> rm -rf node_modules package-lock.json && npm install
+> ```
+>
+> Reinstalar do zero (`rm -rf node_modules`) depois de trocar a versão do
+> `expo` evita estado inconsistente entre `package.json` e `node_modules` —
+> foi necessário aqui porque um `npm install` no meio da troca de SDK falhou
+> por conflito de peer dependencies, deixando versões misturadas. Depois de
+> trocar o SDK, também vale conferir `app.json` → `plugins`: nem todo pacote
+> nativo é um *config plugin* de verdade (alguns scaffolds/`expo install
+> --fix` adicionam entradas para pacotes que não exportam plugin nenhum,
+> o que quebra o `expo start` com um erro de "Unable to resolve a valid
+> config plugin"). Só devem estar em `plugins` pacotes que exportam um
+> `app.plugin.js` — no caso deste projeto, `expo-router` e
+> `expo-splash-screen`.
 
 Por padrão, o app consome a API já publicada em
 `https://localizador-revendedoras.vercel.app`. Para apontar para uma API
