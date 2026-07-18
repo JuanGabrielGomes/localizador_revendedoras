@@ -555,3 +555,11 @@ O que foi revisado e validado manualmente:
   quebrando o princípio de "zero API key" seguido no restante do projeto —
   WebView com o mesmo Leaflet do web foi a alternativa escolhida, com o
   trade-off documentado em vez de escondido.
+- **Incompatibilidade de versão do Expo Go resolvida, não contornada às
+  cegas**: ao testar no celular, o Expo Go acusou incompatibilidade de SDK
+  (o scaffold pegou a SDK 57, mais nova que o Expo Go publicado nas lojas na
+  época). Em vez de tentar forçar/ignorar o aviso, o projeto foi realinhado
+  para a SDK 56 via `npx expo install expo@^56.0.0 && npx expo install
+  --fix` (o mecanismo oficial do Expo para isso), e todo o app foi
+  rebundlado e reconferido depois — documentado em `mobile/README.md` para
+  quem passar pelo mesmo problema numa reinstalação futura.

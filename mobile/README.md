@@ -21,6 +21,22 @@ app; iOS: pela câmera). Também é possível rodar num emulador
 (`npx expo start --android` / `--ios`, exige Android Studio/Xcode) ou no
 navegador (`npx expo start --web` — ver limitação de CORS abaixo).
 
+Celular e computador precisam estar na mesma rede Wi-Fi. Se isso não for
+possível (redes separadas/corporativas), use `npx expo start --tunnel` — a
+conexão passa pelos servidores da Expo em vez da rede local.
+
+> **Nota sobre versão do SDK**: o projeto está fixado na Expo SDK 56
+> (`expo": "^56.0.0"`) de propósito, mesmo já existindo SDK 57 no npm. O app
+> Expo Go publicado nas lojas segue sempre **uma única versão de SDK por
+> vez**, e normalmente há uma defasagem entre o SDK mais novo publicado no
+> npm e o que já chegou na loja — instalar `npx create-expo-app@latest` pega
+> o mais novo do npm, que pode ainda não ser compatível com o Expo Go que
+> você acabou de baixar. Se aparecer o erro "Project is incompatible with
+> this version of Expo Go", o projeto provavelmente precisa ser alinhado à
+> versão de SDK que o Expo Go da loja realmente suporta no momento
+> (`npx expo install expo@<versão> && npx expo install --fix` dentro de
+> `mobile/`).
+
 Por padrão, o app consome a API já publicada em
 `https://localizador-revendedoras.vercel.app`. Para apontar para uma API
 rodando localmente durante o desenvolvimento, defina antes de iniciar:
